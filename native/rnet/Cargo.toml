@@ -3,15 +3,18 @@ name = "rnet"
 version = "0.1.0"
 edition = "2021"
 
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
-
 [dependencies]
-rand = "0.8.5"
+libc = "0.2.126"
+rand = { version = "0.8.5", optional = true }
 
 [profile.release]
 lto = true
 strip = true
 
 [lib]
-name = "rnet"
+name = "rnet_native"
 crate-type = ["cdylib"]
+
+[features]
+default = ["rand"]
+rand = ["dep:rand"]
