@@ -10,7 +10,7 @@ osx-x64|x86_64-apple-darwin
 osx-arm64|aarch64-apple-darwin
 linux-x64|x86_64-unknown-linux-gnu
 linux-arm64|aarch64-unknown-linux-gnu
-linux-arm|arm-unknown-linux-gnueabihf
+linux-arm|armv7-unknown-linux-gnueabihf
 linux-musl-x64|x86_64-unknown-linux-musl
 linux-musl-arm64|aarch64-unknown-linux-musl
-linux-musl-arm|arm-unknown-linux-musleabihf
+linux-musl-arm|armv7-unknown-linux-musleabihf
