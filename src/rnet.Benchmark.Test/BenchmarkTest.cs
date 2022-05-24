@@ -11,4 +11,10 @@ public class BenchmarkTest
 	{
 		BenchmarkRunner.Run<RandFillBenchmark>();
 	}
+
+	[TestMethod]
+	public void MD5Benchmark()
+	{
+		BenchmarkRunner.Run<MD5Benchmark>();
+	}
 }
