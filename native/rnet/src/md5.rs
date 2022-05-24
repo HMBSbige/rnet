@@ -1,53 +1,46 @@
 use libc::*;
 use md5::*;
 
+use crate::digest_ffi;
+
 /// # Safety
 #[no_mangle]
-pub unsafe extern "C" fn md5_new() -> *mut Md5 {
-    Box::into_raw(Box::new(Md5::new()))
+pub unsafe fn md5_new() -> *mut Md5 {
+    digest_ffi::new::<Md5>()
 }
 
 /// # Safety
 #[no_mangle]
-pub unsafe extern "C" fn md5_dispose(md5: *mut Md5) {
-    Box::from_raw(md5);
+pub unsafe fn md5_dispose(hash: *mut Md5) {
+    digest_ffi::dispose(hash);
 }
 
 /// # Safety
 #[no_mangle]
-pub unsafe extern "C" fn md5_reset(md5: *mut Md5) {
-    let md5 = &mut *md5;
-    md5.reset();
+pub unsafe fn md5_reset(hash: *mut Md5) {
+    digest_ffi::reset(hash);
 }
 
 /// # Safety
 #[no_mangle]
-pub unsafe extern "C" fn md5_update_final(
-    md5: *mut Md5,
+pub unsafe fn md5_update_final(
+    hash: *mut Md5,
     ptr: *const u8,
     size: size_t,
     ptr_out: *mut u8,
     size_out: size_t,
 ) {
-    let md5 = &mut *md5;
-    let slice = std::slice::from_raw_parts(ptr, size);
-    md5.update(slice);
-    let slice = std::slice::from_raw_parts_mut(ptr_out, size_out);
-    slice.copy_from_slice(md5.finalize_reset().as_slice());
+    digest_ffi::update_final(hash, ptr, size, ptr_out, size_out);
 }
 
 /// # Safety
 #[no_mangle]
-pub unsafe extern "C" fn md5_update(md5: *mut Md5, ptr: *const u8, size: size_t) {
-    let md5 = &mut *md5;
-    let slice = std::slice::from_raw_parts(ptr, size);
-    md5.update(slice);
+pub unsafe fn md5_update(hash: *mut Md5, ptr: *const u8, size: size_t) {
+    digest_ffi::update(hash, ptr, size);
 }
 
 /// # Safety
 #[no_mangle]
-pub unsafe extern "C" fn md5_get_hash(md5: *mut Md5, ptr: *mut u8, size: size_t) {
-    let md5 = &mut *md5;
-    let slice = std::slice::from_raw_parts_mut(ptr, size);
-    slice.copy_from_slice(md5.finalize_reset().as_slice());
+pub unsafe fn md5_get_hash(hash: *mut Md5, ptr: *mut u8, size: size_t) {
+    digest_ffi::get_hash(hash, ptr, size);
 }

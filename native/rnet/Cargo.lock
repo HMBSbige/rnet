@@ -129,6 +129,7 @@ dependencies = [
 name = "rnet"
 version = "0.1.0"
 dependencies = [
+ "digest",
  "libc",
  "md-5",
  "rand",
